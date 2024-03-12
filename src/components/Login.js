@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom'; // Import useHistory hook
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
+import './Login.css'; // Import CSS file for styling
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -8,7 +9,7 @@ const Login = () => {
     password: ''
   });
   const [errors, setErrors] = useState({});
-  const history = useHistory(); // Initialize useHistory hook
+  const history = useHistory();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -16,16 +17,13 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Your validation logic here
     if (!formData.email || !formData.password) {
       setErrors({ message: 'Email and password are required' });
       return;
     }
-    // If all validations pass, make a POST request to login endpoint
     try {
       const response = await axios.post('http://localhost:5000/api/login', formData);
-      console.log(response.data); // Assuming server responds with success message
-      // Redirect to dashboard after successful login
+      console.log(response.data);
       history.push('/dashboard');
     } catch (error) {
       console.error('Error logging in:', error.response.data);
@@ -33,19 +31,19 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div className="login-container">
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
-        <div>
+        <div className="form-group">
           <label>Email:</label>
           <input type="email" name="email" value={formData.email} onChange={handleChange} />
         </div>
-        <div>
+        <div className="form-group">
           <label>Password:</label>
           <input type="password" name="password" value={formData.password} onChange={handleChange} />
         </div>
         {errors.message && <div className="error">{errors.message}</div>}
-        <button type="submit">Login</button>
+        <button type="submit" className="btn-login">Login</button>
       </form>
     </div>
   );

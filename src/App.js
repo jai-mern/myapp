@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Register from './components/Register'; // Corrected import statement
 import Login from './components/Login'; // Corrected import statement
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = () => {
   return (

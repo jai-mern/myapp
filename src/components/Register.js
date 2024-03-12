@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom'; // Import useHistory hook
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
+import './Register.css'; // Import CSS file for styling
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -10,7 +11,7 @@ const Register = () => {
     confirmPassword: ''
   });
   const [errors, setErrors] = useState({});
-  const history = useHistory(); // Initialize useHistory hook
+  const history = useHistory();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -18,7 +19,6 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Your validation logic here
     if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
       setErrors({ message: 'All fields are required' });
       return;
@@ -27,11 +27,9 @@ const Register = () => {
       setErrors({ message: 'Passwords do not match' });
       return;
     }
-    // If all validations pass, make a POST request to register endpoint
     try {
       const response = await axios.post('http://localhost:5000/api/register', formData);
-      console.log(response.data); // Assuming server responds with success message
-      // Redirect to login page after successful registration
+      console.log(response.data);
       history.push('/login');
     } catch (error) {
       console.error('Error registering user:', error.response.data);
@@ -39,27 +37,27 @@ const Register = () => {
   };
 
   return (
-    <div>
+    <div className="register-container">
       <h2>Register</h2>
       <form onSubmit={handleSubmit}>
-        <div>
+        <div className="form-group">
           <label>Name:</label>
           <input type="text" name="name" value={formData.name} onChange={handleChange} />
         </div>
-        <div>
+        <div className="form-group">
           <label>Email:</label>
           <input type="email" name="email" value={formData.email} onChange={handleChange} />
         </div>
-        <div>
+        <div className="form-group">
           <label>Password:</label>
           <input type="password" name="password" value={formData.password} onChange={handleChange} />
         </div>
-        <div>
+        <div className="form-group">
           <label>Confirm Password:</label>
           <input type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} />
         </div>
         {errors.message && <div className="error">{errors.message}</div>}
-        <button type="submit">Register</button>
+        <button type="submit" className="btn-register">Register</button>
       </form>
     </div>
   );
