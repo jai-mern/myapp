@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './Register.css'; // Import CSS file for styling
 
 const Register = () => {
@@ -28,8 +30,8 @@ const Register = () => {
       return;
     }
     try {
-      const response = await axios.post('http://localhost:5000/api/register', formData);
-      console.log(response.data);
+      await axios.post('http://localhost:5000/api/register', formData);
+      toast.success('User registered successfully');
       history.push('/login');
     } catch (error) {
       console.error('Error registering user:', error.response.data);

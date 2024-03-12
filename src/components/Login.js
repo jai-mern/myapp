@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
+import { toast } from 'react-toastify'; // Import toast from react-toastify
+import 'react-toastify/dist/ReactToastify.css'; // Import default toast style
 import './Login.css'; // Import CSS file for styling
 
 const Login = () => {
@@ -24,6 +26,9 @@ const Login = () => {
     try {
       const response = await axios.post('http://localhost:5000/api/login', formData);
       console.log(response.data);
+      // Display toast notification upon successful login
+      toast.success('Login successful');
+      // Redirect to dashboard
       history.push('/dashboard');
     } catch (error) {
       console.error('Error logging in:', error.response.data);
