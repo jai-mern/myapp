@@ -72,7 +72,13 @@ const Billing = () => {
   };
 
   return (
-    <div className="container mt-4">
+    <div style={{ display: "flex" }}>
+    <div style={{ width: "20%", background: "#e5e5e5" }}>
+      <a href="/Login">Login</a>
+    </div>
+   
+    <div><div className="container mt-4">
+
       <h2 className="text-center mb-4">Billing</h2>
 
       <div className="row">
@@ -182,6 +188,8 @@ const Billing = () => {
         </div>
       </div>
     </div>
+  </div>
+   </div>
   );
 };
 
