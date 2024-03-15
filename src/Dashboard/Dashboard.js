@@ -76,7 +76,9 @@ const Billing = () => {
       <div style={{ width: '20%', background: '#e5e5e5' }}>
         <a href="/login" style={{ display: 'block', padding: '10px' }}>Login</a>
         <a href="/register" style={{ display: 'block', padding: '10px' }}>Register</a>
-        <a href="/billing" style={{ display: 'block', padding: '10px' }}>Billing</a>
+        <a href="/BillingForm" style={{ display: 'block', padding: '10px' }}>BillingForm</a>
+        
+
       </div>
    
     <div><div className="container mt-4">
