@@ -7,7 +7,7 @@ import Dashboard from './Dashboard/Dashboard';
 import Sidebar from './Dashboard/Sidebar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ToastContainer } from 'react-toastify';
-
+import Billing from './Dashboard/Dashboard';
 
 const App = () => {
   return (
@@ -20,6 +20,7 @@ const App = () => {
           <Route path="/BillingForm" element={<BillingForm />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/sidebar" element={<Sidebar />} />
+          <Route patch="/Billing"element={<Billing/>}/>
           
         </Routes>
       </div>
