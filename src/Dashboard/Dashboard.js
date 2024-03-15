@@ -72,10 +72,12 @@ const Billing = () => {
   };
 
   return (
-    <div style={{ display: "flex" }}>
-    <div style={{ width: "20%", background: "#e5e5e5" }}>
-      <a href="/Login">Login</a>
-    </div>
+    <div style={{ display: 'flex' }}>
+      <div style={{ width: '20%', background: '#e5e5e5' }}>
+        <a href="/login" style={{ display: 'block', padding: '10px' }}>Login</a>
+        <a href="/register" style={{ display: 'block', padding: '10px' }}>Register</a>
+        <a href="/billing" style={{ display: 'block', padding: '10px' }}>Billing</a>
+      </div>
    
     <div><div className="container mt-4">
 

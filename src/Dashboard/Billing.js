@@ -53,15 +53,15 @@ const Dashboard = () => {
     <div className="container mt-5">
       <div className="card">
         <div className="card-header bg-primary text-white">
-          <h2>Dashboard</h2>
+          <h2>customer details</h2>
         </div>
         <div className="card-body">
-          <p>Welcome to the dashboard! Here, you can find important information and visualizations.</p>
+          <p>Welcome </p>
 
           <div className="charts-container">
             {/* Add your charts or visualizations here */}
-            <p>Chart 1 goes here</p>
-            <p>Chart 2 goes here</p>
+            <p>customerName</p>
+            <p>customer address</p>
           </div>
 
           <div className="notifications mt-4">
