@@ -14,7 +14,7 @@ const App = () => {
       <div>
         <ToastContainer /> {/* Add ToastContainer for displaying toast notifications */}
         <Switch>
-          <Route path="/Register" component={Register} /> {/* Corrected path */}
+          <Route path="/" component={Register} /> {/* Corrected path */}
           <Route path="/Login" component={Login} />
           <Route path="/Billing" component={Billing} /> {/* Corrected path */}
           <Route path="/Dashboard" component={Dashboard} /> {/* Corrected path */}

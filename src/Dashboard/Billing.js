@@ -1,188 +1,166 @@
 import React, { useState } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import 'react-datepicker/dist/react-datepicker.css';
+import DatePicker from 'react-datepicker';
 
-const Billing = () => {
-  const [customerName, setCustomerName] = useState('');
-  const [billingDate, setBillingDate] = useState('');
-  const [itemName, setItemName] = useState('');
-  const [quantity, setQuantity] = useState('');
-  const [price, setPrice] = useState('');
-  const [billingItems, setBillingItems] = useState([]);
-  const [editingItem, setEditingItem] = useState(null);
-  const [total, setTotal] = useState(0);
+const Dashboard = () => {
+  const [name, setName] = useState('');
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [mobile, setMobile] = useState('');
+  const [address, setAddress] = useState('');
+  const [userDetailsList, setUserDetailsList] = useState([]);
+  const [editIndex, setEditIndex] = useState(null);
 
-  const handleAddOrUpdateItem = (e) => {
+  const handleFormSubmit = (e) => {
     e.preventDefault();
 
-    if (!customerName || !billingDate || !itemName || !quantity || !price) {
-      alert('Please fill in all fields.');
-      return;
-    }
-
-    if (editingItem) {
-      const updatedItems = billingItems.map((item) =>
-        item.id === editingItem.id
-          ? { ...item, itemName, quantity: parseInt(quantity), price: parseFloat(price) }
-          : item
-      );
-
-      setBillingItems(updatedItems);
-      setEditingItem(null);
+    if (editIndex !== null) {
+      // Edit existing user details
+      const updatedList = [...userDetailsList];
+      updatedList[editIndex] = { name, selectedDate, mobile, address };
+      setUserDetailsList(updatedList);
+      setEditIndex(null);
     } else {
-      const newItem = {
-        id: Date.now(),
-        customerName,
-        billingDate,
-        itemName,
-        quantity: parseInt(quantity),
-        price: parseFloat(price),
-      };
-      setBillingItems([...billingItems, newItem]);
+      // Add new user details
+      setUserDetailsList([...userDetailsList, { name, selectedDate, mobile, address }]);
     }
 
-    clearForm();
-    calculateTotal();
+    // Clear the form fields
+    setName('');
+    setSelectedDate(null);
+    setMobile('');
+    setAddress('');
   };
 
-  const handleEditItem = (item) => {
-    setCustomerName(item.customerName);
-    setBillingDate(item.billingDate);
-    setItemName(item.itemName);
-    setQuantity(item.quantity.toString());
-    setPrice(item.price.toString());
-    setEditingItem(item);
+  const handleEdit = (index) => {
+    // Set the form fields with the selected user details for editing
+    const userDetails = userDetailsList[index];
+    setName(userDetails.name);
+    setSelectedDate(userDetails.selectedDate);
+    setMobile(userDetails.mobile);
+    setAddress(userDetails.address);
+    setEditIndex(index);
   };
 
-  const handleDeleteItem = (id) => {
-    const updatedItems = billingItems.filter((item) => item.id !== id);
-    setBillingItems(updatedItems);
-    calculateTotal();
-  };
-
-  const calculateTotal = () => {
-    const totalAmount = billingItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    setTotal(totalAmount.toFixed(2));
-  };
-
-  const clearForm = () => {
-    setCustomerName('');
-    setBillingDate('');
-    setItemName('');
-    setQuantity('');
-    setPrice('');
+  const handleDelete = (index) => {
+    // Delete user details
+    const updatedList = userDetailsList.filter((_, i) => i !== index);
+    setUserDetailsList(updatedList);
   };
 
   return (
-    <div className="container">
-      <h2 className="text-center">Billing</h2>
+    <div className="container mt-5">
+      <div className="card">
+        <div className="card-header bg-primary text-white">
+          <h2>Dashboard</h2>
+        </div>
+        <div className="card-body">
+          <p>Welcome to the dashboard! Here, you can find important information and visualizations.</p>
 
-      <div className="row">
-        <form className="col-md-6" onSubmit={handleAddOrUpdateItem}>
-          <div className="mb-3">
-            <label htmlFor="customerName" className="form-label">Customer Name:</label>
-            <input
-              type="text"
-              id="customerName"
-              name="customerName"
-              className="form-control"
-              value={customerName}
-              onChange={(e) => setCustomerName(e.target.value)}
-            />
+          <div className="charts-container">
+            {/* Add your charts or visualizations here */}
+            <p>Chart 1 goes here</p>
+            <p>Chart 2 goes here</p>
           </div>
 
-          <div className="mb-3">
-            <label htmlFor="billingDate" className="form-label">Billing Date:</label>
-            <input
-              type="date"
-              id="billingDate"
-              name="billingDate"
-              className="form-control"
-              value={billingDate}
-              onChange={(e) => setBillingDate(e.target.value)}
-            />
+          <div className="notifications mt-4">
+            <p>Latest notifications or updates</p>
           </div>
 
-          <div className="mb-3">
-            <label htmlFor="itemName" className="form-label">Item Name:</label>
-            <input
-              type="text"
-              id="itemName"
-              name="itemName"
-              className="form-control"
-              value={itemName}
-              onChange={(e) => setItemName(e.target.value)}
-            />
+          <div className="user-details-form mt-4">
+            <h3>Enter User Details</h3>
+            <form onSubmit={handleFormSubmit}>
+              <div className="mb-3">
+                <label className="form-label">Name:</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </div>
+              <div className="mb-3">
+                <label className="form-label">Date:</label>
+                <DatePicker
+                  className="form-control"
+                  selected={selectedDate}
+                  onChange={(date) => setSelectedDate(date)}
+                  dateFormat="dd/MM/yyyy"
+                  isClearable
+                />
+              </div>
+              <div className="mb-3">
+                <label className="form-label">Mobile:</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={mobile}
+                  onChange={(e) => setMobile(e.target.value)}
+                />
+              </div>
+              <div className="mb-3">
+                <label className="form-label">Address:</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                />
+              </div>
+              <button type="submit" className="btn btn-primary">
+                {editIndex !== null ? 'Edit' : 'Submit'}
+              </button>
+            </form>
           </div>
 
-          <div className="mb-3">
-            <label htmlFor="quantity" className="form-label">Quantity:</label>
-            <input
-              type="number"
-              id="quantity"
-              name="quantity"
-              className="form-control"
-              value={quantity}
-              onChange={(e) => setQuantity(e.target.value)}
-            />
-          </div>
-
-          <div className="mb-3">
-            <label htmlFor="price" className="form-label">Price:</label>
-            <input
-              type="text"
-              id="price"
-              name="price"
-              className="form-control"
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-            />
-          </div>
-
-          <button type="submit" className="btn btn-primary">
-            {editingItem ? 'Update Item' : 'Add Item'}
-          </button>
-        </form>
-
-        <div className="col-md-6">
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Customer Name</th>
-                <th>Billing Date</th>
-                <th>Item Name</th>
-                <th>Quantity</th>
-                <th>Price</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {billingItems.map((item) => (
-                <tr key={item.id}>
-                  <td>{item.customerName}</td>
-                  <td>{item.billingDate}</td>
-                  <td>{item.itemName}</td>
-                  <td>{item.quantity}</td>
-                  <td>${item.price.toFixed(2)}</td>
-                  <td>
-                    <button className="btn btn-warning" onClick={() => handleEditItem(item)}>
-                      Edit
-                    </button>
-                    <button className="btn btn-danger" onClick={() => handleDeleteItem(item.id)}>
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-              <tr>
-                <td colSpan="4" className="text-end fw-bold">Total:</td>
-                <td>${total}</td>
-                <td></td>
-              </tr>
-            </tbody>
-          </table>
+          {/* Display entered user details */}
+          {userDetailsList.length > 0 && (
+            <div className="mt-4" style={{ backgroundColor: 'orange', padding: '10px', borderRadius: '8px' }}>
+              <h3>User Details List</h3>
+              <table className="table table-striped">
+                <thead className="thead-dark">
+                  <tr>
+                    <th>Name</th>
+                    <th>Date</th>
+                    <th>Mobile</th>
+                    <th>Address</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {userDetailsList.map((user, index) => (
+                    <tr key={index}>
+                      <td>{user.name}</td>
+                      <td>{user.selectedDate?.toLocaleDateString()}</td>
+                      <td>{user.mobile}</td>
+                      <td>{user.address}</td>
+                      <td>
+                        <button
+                          type="button"
+                          className="btn btn-info btn-sm"
+                          onClick={() => handleEdit(index)}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          type="button"
+                          className="btn btn-danger btn-sm ml-2"
+                          onClick={() => handleDelete(index)}
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
       </div>
     </div>
   );
 };
 
-export default Billing;
+export default Dashboard;
