@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify'; // Import toast from react-toastify
 import 'react-toastify/dist/ReactToastify.css'; // Import default toast style
@@ -11,7 +11,7 @@ const Login = () => {
     password: ''
   });
   const [errors, setErrors] = useState({});
-  const history = useHistory();
+  const history = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -29,7 +29,7 @@ const Login = () => {
       // Display toast notification upon successful login
       toast.success('Login successful');
       // Redirect to dashboard
-      history.push('/dashboard');
+      history('/dashboard');
     } catch (error) {
       console.error('Error logging in:', error.response.data);
     }

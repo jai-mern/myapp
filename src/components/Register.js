@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -13,7 +13,7 @@ const Register = () => {
     confirmPassword: ''
   });
   const [errors, setErrors] = useState({});
-  const history = useHistory();
+  const history = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -32,7 +32,7 @@ const Register = () => {
     try {
       await axios.post('http://localhost:5000/api/register', formData);
       toast.success('User registered successfully');
-      history.push('/login');
+      history('/login');
     } catch (error) {
       console.error('Error registering user:', error.response.data);
     }
